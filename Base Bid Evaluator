@@ -35,9 +35,15 @@ for x in range(10, 301, 10): #set base bid range
     dict2 = {x: ctr}
 
     dict1.update(dict2)
+    
+     if spend > 25000000:
+        print "\nBid Total Exceeded, Terminating"
+        break
 
 print "BEST BID VALUE BELOW"
 print max(dict1, key=dict1.get)
+
+
 
 data = pd.DataFrame.from_dict(dict1, orient="index")
 #SET OUTPUT CSV NAME
