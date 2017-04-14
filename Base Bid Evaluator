@@ -15,10 +15,23 @@ for x in range(10, 301, 10): #set base bid range
 
     base_bid = x
     ctr = df2['click'].sum().astype('float64') / df2['logtype'].sum().astype('float64')
+    clicks = df2['click'].sum()
+    spend = df2['payprice'].sum()
+    bidTotal = df['bid'].sum()
+    cpm = spend.astype('float64') / df2['logtype'].sum().astype('float64')
+    cpc = None
+    if clicks == 0:
+        cpc = spend
+    else:
+        cpc = spend.astype('float64') / clicks
 
     print "Base Bid:", x
     print "CTR:", ctr
-
+    print "Clicks", clicks
+    print "Spend", spend
+    print "Total Bidprice:", bidTotal
+    print "Average CPM:", cpm
+    print "Average CPC:", cpc
     dict2 = {x: ctr}
 
     dict1.update(dict2)
