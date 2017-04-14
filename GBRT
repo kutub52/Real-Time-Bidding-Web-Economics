@@ -1,0 +1,25 @@
+import graphlab as gl
+
+
+# Declare Validation Data Set as "df"
+testdata = gl.SFrame.read_csv("validation.csv")
+
+# Declare Train Data Set as "df2"
+traindata = gl.SFrame.read_csv("train.csv")
+
+
+model = gl.boosted_trees_classifier.create(traindata, target='click', features=['advertiser', 'slotheight',
+                                                                                 'slotwidth', 'hour', 'weekday', 'region', 'city'
+                                                                                 ,'slotvisibility'], max_iterations= 20
+                                            )
+
+values = model.predict(testdata, output_type='probability')
+
+print values.head(20)
+
+
+# Add pCTR column
+newdata = testdata.add_column(values, name='PCTR_GBRT')
+
+#Save to csv
+newdata.save('validationprediction.csv', format='csv')
